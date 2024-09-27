@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outils pour battre des ours</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+            width: 300px; /* Ajustez la largeur selon vos besoins */
+            height: 300px; /* Ajustez la hauteur selon vos besoins */
+            object-fit: cover; /* Pour conserver les proportions de l'image */
+        }
+        #gameContainer {
+            margin-top: 50px;
+        }
+        #bear {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Outils pour battre des ours</h1>
+    <button onclick="showImage('pelle')">Pelle</button>
+    <button onclick="showImage('fusil')">Fusil</button>
+    <button onclick="showImage('arc')">Arc</button>
+
+    <div id="imageContainer">
+        <!-- Les images seront affichées ici -->
+    </div>
+
+    <button onclick="startGame()">Démarrer le jeu</button>
+
+    <div id="gameContainer">
+        <img id="bear" src="images/bear.jpg.jpeg" alt="Ours" style="display: none;">
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function showImage(tool) {
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = ''; // Efface l'image précédente
+
+            const img = document.createElement('img');
+            img.src = `images/${tool}.jpg`; // Assurez-vous que les images sont nommées pelle.jpg, fusil.jpg, arc.jpg et sont dans le dossier 'images'
+            img.alt = tool;
+            imageContainer.appendChild(img);
+        }
+
+        function startGame() {
+            const bear = document.getElementById('bear');
+            const message = document.getElementById('message');
+
+            bear.style.display = 'block';
+            message.textContent = '';
+
+            bear.addEventListener('click', () => {
+                bear.style.display = 'none';
+                message.textContent = 'Vous avez tué l\'ours !';
+            });
+        }
+    </script>
+
+<h2>Retourner à la page d'<a href='index.html'>accueil</a></h2>
+</body>
+</html>
