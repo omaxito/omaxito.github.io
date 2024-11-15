@@ -7,8 +7,28 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
+        }
+        .flashy-counter {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            border: 5px solid white;
+            border-radius: 15px;
+            color: white;
+            background: linear-gradient(45deg, magenta, cyan, yellow, lime, orange, red);
+            background-size: 400% 400%;
+            animation: animate-bg 5s infinite linear;
+            box-shadow: 0 0 30px white;
+        }
+        @keyframes animate-bg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        #visit-count {
+            color: rgb(43, 0, 255);
+            text-shadow: 0 0 10px rgb(136, 0, 255), 0 0 20px yellow;
         }
         h1, h2, h3 {
             color: #333;
@@ -20,11 +40,55 @@
             color: red;
             font-weight: bold;
         }
+        .flashy-text {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            border: 5px solid white;
+            border-radius: 10px;
+            color: white;
+            background: linear-gradient(45deg, red, orange, yellow, green, blue, purple);
+            background-size: 300% 300%;
+            animation: flashy-bg 3s infinite linear;
+            box-shadow: 0 0 20px white;
+        }
+        @keyframes flashy-bg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
     </style>
 </head>
 <body>
 <img src="images/oursmechant.gif" alt="oursmechant">
     <h1>Comment se défendre face à un ours</h1>
+
+    <div class="flashy-counter">
+        Nombre de visites : <span id="visit-count">0</span> (ma mémoire s'arrête à 10)
+    </div>
+
+    <script>
+        // Vérifie si un compteur existe dans le LocalStorage
+        let visitCount = localStorage.getItem('visitCount');
+
+        if (visitCount) {
+            // Incrémente le compteur si déjà présent
+            visitCount = parseInt(visitCount) + 1;
+        } else {
+            // Initialise le compteur à 1 si aucune visite précédente
+            visitCount = 1;
+        };
+        if (visitCount > 10) {
+            visitCount = 1;
+        }
+
+        // Sauvegarde le compteur mis à jour dans le LocalStorage
+        localStorage.setItem('visitCount', visitCount);
+
+        // Met à jour le contenu du compteur
+        document.getElementById('visit-count').textContent = visitCount;
+    </script>
  
     <div class="section">
         <h2>Introduction</h2>
