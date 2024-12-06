@@ -58,11 +58,32 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        .outils{
+            color: red;
+        }
+        .oursmangeur{
+            align-self: auto;
+        }
+        .entete {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
-<img src="images/oursmechant.gif" alt="oursmechant">
-    <h1>Comment se défendre face à un ours</h1>
+
+    <script language="javascript">
+        <!-- Début
+        function popup() {
+          Pub=window.open("outils.html","pub","toolbar=no,location=yes,directories=no,menubar=no,scrollbars=yes,status=yes,resizable=1,width=450, height=100");
+        }
+        // Fin -->
+        </script>
+    
+      <body onload="popup()">
 
     <div class="flashy-counter">
         Nombre de visites : <span id="visit-count">0</span> (ma mémoire s'arrête à 10)
@@ -82,13 +103,18 @@
         if (visitCount > 10) {
             visitCount = 1;
         }
-
+        
         // Sauvegarde le compteur mis à jour dans le LocalStorage
         localStorage.setItem('visitCount', visitCount);
 
         // Met à jour le contenu du compteur
         document.getElementById('visit-count').textContent = visitCount;
     </script>
+<div class="entete">
+<img id="oursmangeur" src="images/oursmechant.gif" alt="oursmechant">
+    <h1>Comment se défendre face à un ours / Ou <a class="outils" href="outils.html">apprennez à vous battre en cliquant ici.</a></h1>
+</div>
+    
  
     <div class="section">
         <h2>Introduction</h2>
