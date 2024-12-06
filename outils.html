@@ -20,9 +20,6 @@
             margin: 20px auto;
             max-width: 100%;
             height: auto;
-            width: 300px;
-            height: 300px;
-            object-fit: cover;
         }
         #gameContainer {
             margin-top: 50px;
@@ -51,83 +48,67 @@
     <button onclick="showImage('arc')">Arc</button>
 
     <div id="imageContainer">
-        <!-- Les images seront affichées ici -->
+        <!-- Les images des armes seront affichées ici -->
     </div>
 
     <button onclick="startGame()">Démarrer le jeu</button>
 
     <div id="gameContainer">
-        <img id="bear" src="images/bear.jpg.jpeg" alt="Ours" style="display: none;">
+        <img id="bear" src="images/bear.jpg" alt="Ours" style="display: none;">
         <div id="message"></div>
     </div>
 
     <script>
-        let currentTool = '';
-        let bearClicked = false; // Empêche la duplication du gestionnaire
+        let currentTool = ''; // Arme actuellement sélectionnée
 
+        // Afficher l'image de l'arme sélectionnée
         function showImage(tool) {
             const imageContainer = document.getElementById('imageContainer');
             imageContainer.innerHTML = ''; // Efface l'image précédente
 
-            // Afficher l'image de l'arme
             const img = document.createElement('img');
-            img.src = `images/${tool}.jpg`; // Exemple : pelle.jpg, fusil.jpg, arc.jpg
+            img.src = `images/${tool}.jpg`; // Exemple : pelle.jpg
             img.alt = tool;
+            img.style.width = '200px';
             imageContainer.appendChild(img);
 
-            // Jouer le son de chargement
-            const loadSound = new Audio(`sounds/${tool}_load.mp3`); // Exemple : fusil_load.mp3
-            loadSound.play();
-
-            // Définir l'arme actuelle
             currentTool = tool;
         }
 
+        // Commencer le jeu : afficher l'ours et gérer le clic
         function startGame() {
             const bear = document.getElementById('bear');
             const message = document.getElementById('message');
 
+            // Affiche l'ours et réinitialise les messages
             bear.style.display = 'block';
             message.textContent = '';
             message.className = '';
 
-            if (!bearClicked) {
-                bear.addEventListener('click', () => {
-                    if (!currentTool) {
-                        message.textContent = 'Choisissez une arme d\'abord !';
-                        message.className = 'fail'; // Texte en rouge pour avertir
-                        return;
-                    }
+            // Nettoie les anciens gestionnaires d'événements
+            const newBear = bear.cloneNode(true);
+            bear.parentNode.replaceChild(newBear, bear);
 
-                    // Jouer le son de tir spécifique à l'arme
-                    const shootSound = new Audio(`sounds/${currentTool}_shoot.mp3`); // Exemple : fusil_shoot.mp3
-                    shootSound.play();
+            // Ajoute un gestionnaire de clic sur l'ours
+            newBear.addEventListener('click', () => {
+                if (!currentTool) {
+                    message.textContent = 'Choisissez une arme d\'abord !';
+                    message.className = 'fail';
+                    return;
+                }
 
-                    // Attendre la fin du son de tir avant de jouer le son de réussite ou d'échec
-                    shootSound.onended = () => {
-                        // Générer une chance aléatoire pour le succès ou l'échec
-                        const success = Math.random() > 0.5; // 50% de chance de réussite
+                // Générer une chance aléatoire pour le succès ou l'échec
+                const success = Math.random() > 0.5; // 50% de chance de réussite
 
-                        if (success) {
-                            // Jouer le son de réussite commun
-                            const successSound = new Audio(`sounds/success.mp3`);
-                            successSound.play();
-
-                            bear.style.display = 'none';
-                            message.textContent = 'Vous avez tué l\'ours !';
-                            message.className = 'success'; // Texte en vert
-                        } else {
-                            // Jouer le son d'échec commun
-                            const failSound = new Audio(`sounds/fail.mp3`);
-                            failSound.play();
-
-                            message.textContent = 'Le tir a échoué ! L\'ours est toujours en vie.';
-                            message.className = 'fail'; // Texte en rouge
-                        }
-                    };
-                });
-                bearClicked = true; // Assure que le gestionnaire est ajouté une seule fois
-            }
+                if (success) {
+                    newBear.style.display = 'none'; // Cache l'ours
+                    message.textContent = 'Vous avez tué l\'ours !';
+                    message.className = 'success';
+                } else {
+                    message.textContent = 'Le tir a échoué ! L\'ours est toujours en vie.';
+                    message.className = 'fail';
+                }
+            });
         }
     </script>
 
